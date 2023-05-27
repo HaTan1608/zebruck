@@ -1,8 +1,8 @@
 import Product from "@/components/Product";
 
 export default async function Home() {
-  const res = await fetch("https://fakestoreapi.com/products");
-  const products: Product[] = await res.json();
+  const res = await fetch("http://localhost:3000/api/products");
+  const products: any[] = await res.json();
 
   return (
     <main className="min-h-screen max-w-7xl mx-auto px-8 xl:px-0 mt-48">

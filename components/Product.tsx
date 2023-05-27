@@ -1,11 +1,8 @@
 import Link from "next/link";
 import ProductImage from "./ProductImage";
 
-type Props = {
-  product: Product;
-};
 
-function Product({ product }: Props) {
+function Product({ product }: any) {
   return (
     <Link
       href={`/product/${product.id}`}
