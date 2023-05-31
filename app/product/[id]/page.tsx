@@ -10,7 +10,7 @@ type Props = {
 async function ProductPage({ params: { id } }: Props) {
   try {
     const res = await fetch(`https://fakestoreapi.com/products/${id}`);
-    const product: Product = await res.json();
+    const product: any = await res.json();
 
     return (
       <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-8 px-4 mt-48 pb-10">
