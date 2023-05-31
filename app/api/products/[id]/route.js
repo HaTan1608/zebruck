@@ -6,7 +6,7 @@ export const GET = async (request, { params }) => {
     await connectToDB();
 
     const prompts = await Order.find({ creator: params.id }).populate(
-      "creatorz"
+      "creator"
     );
 
     return new Response(JSON.stringify(prompts), { status: 200 });
