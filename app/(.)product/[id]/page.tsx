@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 function Modal() {
   let [isOpen, setIsOpen] = useState(true);
   const id = useParams().id;
-  const [product, setProduct] = useState<Product>();
+  const [product, setProduct] = useState<any>();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 

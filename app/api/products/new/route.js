@@ -1,23 +1,13 @@
 import Product from "@/models/product";
 import { connectToDB } from "@/utils/database";
 
-export const GET = async (request) => {
-  try {
-    await connectToDB();
-    const products = await Product.find({});
-    return new Response(JSON.stringify(products), { status: 200 });
-  } catch (error) {
-    return new Response("Failed to fetch all products", { status: 500 });
-  }
-};
-
 export const POST = async (request) => {
   //   const { userId, prompt, tag } = await request.json();
   try {
     await connectToDB();
     const newProduct = new Product({
-      name: "Test",
-      slug: "test",
+      name: "Test3",
+      slug: "test3",
       category: "test",
       images: [],
       price: 10000,
@@ -28,8 +18,8 @@ export const POST = async (request) => {
     });
 
     await newProduct.save();
-    return new Response(JSON.stringify(newPrompt), { status: 201 });
+    return new Response(JSON.stringify(newProduct), { status: 201 });
   } catch (error) {
-    return new Response("Failed to fetch all products", { status: 500 });
+    return new Response(error, { status: 500 });
   }
 };
