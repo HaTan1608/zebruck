@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 type Props = {
-  product: Product;
+  product: any;
   fill?: boolean;
 };
 
