@@ -18,7 +18,7 @@ function Modal() {
     console.log(id);
     async function fetchProduct() {
       setLoading(true);
-      const res = await fetch(`${process.env.NEXTAUTH_URL}/api/products/${id}`);
+      const res = await fetch(`/api/products/${id}`);
       const product = await res.json();
 
       setProduct(product);

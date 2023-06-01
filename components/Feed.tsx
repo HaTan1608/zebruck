@@ -13,7 +13,7 @@ const Feed = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch(`${process.env.NEXTAUTH_URL}/api/products`);
+      const response = await fetch(`/api/products`);
 
       const data = await response.json();
       console.log(data);
