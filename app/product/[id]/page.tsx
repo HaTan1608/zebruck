@@ -27,7 +27,7 @@ async function ProductPage({ params: { id } }: Props) {
                   {Array.from(
                     { length: Math.floor(product.rating) },
                     (_, i) => (
-                      <StarIcon key={i} className="h-4 w-4 text-yellow-500" />
+                      <StarIcon key={i} className="h-8 w-8 text-yellow-500" />
                     )
                   )}
 
@@ -37,7 +37,7 @@ async function ProductPage({ params: { id } }: Props) {
                     (_, i) => (
                       <StarIconOutline
                         key={i}
-                        className="h-4 w-4 text-yellow-500"
+                        className="h-8 w-8 text-yellow-500"
                       />
                     )
                   )}

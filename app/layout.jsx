@@ -5,6 +5,9 @@ import Provider from "@/components/Provider";
 export const metadata = {
   title: "Zebruck",
   description: "Zebruck, Starbuck items shop",
+  icons: {
+    icon: "/logo.jpeg",
+  },
 };
 
 // If loading a variable font, you don't need to specify the font weight >>> https://fonts.google.com/variablefonts
