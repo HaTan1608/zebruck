@@ -10,7 +10,7 @@ type Props = {
 async function ProductPage({ params: { id } }: Props) {
   try {
     console.log("1321321");
-    const res = await fetch(`http://localhost:3000/api/products/${id}`);
+    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/products/${id}`);
     const product: any = await res.json();
 
     return (
