@@ -5,15 +5,20 @@ const nextConfig = {
     serverComponentsExternalPackages: ["mongoose"],
   },
   images: {
-    domains: ["fakestoreapi.com", "i.ibb.co"],
+    domains: [
+      "fakestoreapi.com",
+      "i.ibb.co",
+      "vn-test-11.slatic.net",
+      "vn-test-11.slatic.net",
+    ],
   },
   webpack(config) {
     config.experiments = {
       ...config.experiments,
       topLevelAwait: true,
-    }
-    return config
-  }
+    };
+    return config;
+  },
 };
 
 module.exports = nextConfig;

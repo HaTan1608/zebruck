@@ -15,9 +15,10 @@ function Modal() {
   const router = useRouter();
 
   useEffect(() => {
+    console.log(id);
     async function fetchProduct() {
       setLoading(true);
-      const res = await fetch(`https://fakestoreapi.com/products/${id}`);
+      const res = await fetch(`http://localhost:3000/api/products/${id}`);
       const product = await res.json();
 
       setProduct(product);
@@ -57,16 +58,15 @@ function Modal() {
                 )}
                 <div className="flex-1 flex flex-col">
                   <div className="flex-1">
-                    <h4 className="font-semibold">{product?.title}</h4>
+                    <h4 className="font-semibold">{product?.name}</h4>
                     <p className="font-medium text-sm">${product?.price}</p>
 
-                    <div className="flex items-center text-sm my-4">
-                      <p>{product?.rating.rate}</p>
-                      {product?.rating.rate && (
-                        <div className="flex items-center ml-2 mr-6">
+                    <div className="flex items-center text-sm my-2">
+                      {product?.rating && (
+                        <div className="flex items-center  mr-2">
                           {/* Display 5 stars but display the rate ones as StarIconOutline  */}
                           {Array.from(
-                            { length: Math.floor(product.rating.rate) },
+                            { length: Math.floor(product.rating) },
                             (_, i) => (
                               <StarIcon
                                 key={i}
@@ -77,7 +77,7 @@ function Modal() {
 
                           {/* Display the rest of the stars as StarIconOutline  */}
                           {Array.from(
-                            { length: 5 - Math.floor(product.rating.rate) },
+                            { length: 5 - Math.floor(product.rating) },
                             (_, i) => (
                               <StarIconOutline
                                 key={i}
@@ -87,9 +87,7 @@ function Modal() {
                           )}
                         </div>
                       )}
-                      <p className="text-blue-600 hover:underline cursor-pointer text-xs">
-                        See all {product?.rating.count} reviews
-                      </p>
+                      (<p>{product?.numReviews}</p>)
                     </div>
 
                     <p className="line-clamp-5 text-sm">

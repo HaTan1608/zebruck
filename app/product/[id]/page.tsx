@@ -9,7 +9,8 @@ type Props = {
 
 async function ProductPage({ params: { id } }: Props) {
   try {
-    const res = await fetch(`https://fakestoreapi.com/products/${id}`);
+    console.log("1321321");
+    const res = await fetch(`http://localhost:3000/api/products/${id}`);
     const product: any = await res.json();
 
     return (
@@ -18,7 +19,7 @@ async function ProductPage({ params: { id } }: Props) {
 
         <div className="divide-y">
           <div className="space-y-2 pb-8">
-            <h1 className="text-2xl md:text-4xl font-bold">{product.title}</h1>
+            <h1 className="text-2xl md:text-4xl font-bold">{product.name}</h1>
             <h2 className="text-gray-500 font-bold text-xl md:text-3xl">
               ${product.price}
             </h2>
