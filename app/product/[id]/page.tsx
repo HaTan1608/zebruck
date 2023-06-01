@@ -8,6 +8,8 @@ type Props = {
 };
 
 async function ProductPage({ params: { id } }: Props) {
+  console.log("1321321", id);
+
   try {
     console.log("1321321", id);
     const res = await fetch(`/api/products/${id}`);
@@ -32,6 +34,7 @@ async function ProductPage({ params: { id } }: Props) {
       </div>
     );
   } catch (error) {
+    console.log("1321321", id);
     notFound();
   }
 }
