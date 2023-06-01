@@ -51,7 +51,7 @@ function Modal() {
               <div className="h-8 w-8 rounded-full border-2 border-dotted border-blue-600 animate-spin" />
             ) : (
               <div className="flex gap-x-8 h-96">
-                {product?.image && (
+                {product?.images && (
                   <div className="relative w-72 h-full hidden md:inline">
                     <ProductImage product={product} fill />
                   </div>

@@ -9,7 +9,7 @@ type Props = {
 
 async function ProductPage({ params: { id } }: Props) {
   try {
-    console.log("1321321");
+    console.log("1321321", id);
     const res = await fetch(`/api/products/${id}`);
     const product: any = await res.json();
 
