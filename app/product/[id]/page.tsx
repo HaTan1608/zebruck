@@ -7,7 +7,28 @@ type Props = {
     id: string;
   };
 };
+export async function generateMetadata({
+  params: { id },
+}: Props): Promise<any> {
+  const res = await fetch(`https://www.zebrucks.com/api/products/${id}`);
+  const product: any = await res.json();
 
+  return {
+    title: product.name,
+    description: product.description,
+    openGraph: {
+      title: product.name,
+      description: product.description,
+      images: [
+        {
+          url: product?.images[0].image,
+        },
+      ],
+      locale: "en_US",
+      type: "website",
+    },
+  };
+}
 async function ProductPage({ params: { id } }: Props) {
   try {
     const res = await fetch(`https://www.zebrucks.com/api/products/${id}`);
