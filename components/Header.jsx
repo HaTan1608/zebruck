@@ -81,7 +81,7 @@ const Header = () => {
       <div className="sm:hidden flex relative">
         {session?.user ? (
           <div className="flex items-center justify-center">
-            <Link href="/cart" className="relative mr-8">
+            <Link href="/cart" className="relative mr-6">
               <ShoppingBagIcon className="h-8 w-8" />
               <div className="font-bold text-red-500 absolute top-[-8px] right-[-8px] w-6 h-6 flex justify-center items-center rounded-full text-sm bg-white border border-black">
                 1
