@@ -2,6 +2,7 @@ import Header from "@/components/Header.jsx";
 import "./globals.css";
 import { Montserrat } from "next/font/google";
 import Provider from "@/components/Provider";
+import { CartContextProvider } from "@/context/cart.context";
 export const metadata = {
   title: "Zebruck",
   description: "Zebruck, Starbuck items shop",
@@ -21,11 +22,13 @@ export default function RootLayout({ children }) {
     <html lang="en" className={montserrat.className}>
       <body>
         <Provider>
-          <div className="main">
-            <div className="gradient" />
-          </div>
-          <Header />
-          {children}
+          <CartContextProvider>
+            <div className="main">
+              <div className="gradient" />
+            </div>
+            <Header />
+            {children}
+          </CartContextProvider>
         </Provider>
       </body>
     </html>

@@ -32,7 +32,7 @@ const handler = NextAuth({
           console.log("12312321312");
           await User.create({
             email: profile.email,
-            username: profile.name.replace(" ", "").toLowerCase(),
+            name: profile.name.replace(" ", "").toLowerCase(),
             image: profile.picture,
           });
         }

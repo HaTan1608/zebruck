@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const Header = () => {
@@ -35,15 +36,18 @@ const Header = () => {
       <div className="sm:flex hidden">
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
-            <Link href="/create-prompt" className="black_btn">
-              Create Post
+            <Link href="/cart" className="relative">
+              <ShoppingBagIcon className="h-8 w-8" />
+              <div className="font-bold text-red-500 absolute top-[-8px] right-[-8px] w-6 h-6 flex justify-center items-center rounded-full text-sm bg-white border border-black">
+                1
+              </div>
             </Link>
 
-            <button type="button" onClick={signOut} className="outline_btn">
+            {/* <button type="button" onClick={signOut} className="outline_btn">
               Sign Out
-            </button>
+            </button> */}
 
-            <Link href="/profile">
+            <Link href="/profile" className="flex items-center justify-center">
               <Image
                 src={session?.user.image}
                 width={37}
@@ -51,6 +55,7 @@ const Header = () => {
                 className="rounded-full"
                 alt="profile"
               />
+              &nbsp;{session?.user.name}
             </Link>
           </div>
         ) : (

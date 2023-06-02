@@ -2,19 +2,25 @@ import Link from "next/link";
 import ProductImage from "./ProductImage";
 import { StarIcon as StarIconOutline } from "@heroicons/react/24/outline";
 import { StarIcon } from "@heroicons/react/24/solid";
+import { CartContext } from "@/context/cart.context";
+import React, { useContext } from "react";
 function Product({ product }: any) {
+  const { state, dispatch } = useContext(CartContext);
   return (
-    <Link
-      href={`/product/${product._id}`}
-      className="h-96 flex flex-col p-5 rounded border group hover:scale-105 transition-transform ease-out duration-200"
-    >
-      <div className="relative max-h-72 flex-1">
+    <div className="h-96 flex flex-col p-5 rounded border group hover:scale-105 transition-transform ease-out duration-200">
+      <Link
+        href={`/product/${product._id}`}
+        className="relative max-h-72 flex-1"
+      >
         <ProductImage product={product} fill />
-      </div>
+      </Link>
 
-      <div className="font-semibold flex items-center justify-between mt-4 mb-1">
+      <Link
+        href={`/product/${product._id}`}
+        className="font-semibold flex items-center justify-between mt-4 mb-1"
+      >
         <p className="truncate">{product.name}</p>
-      </div>
+      </Link>
       <div className="font-semibold flex items-center justify-between mb-1">
         <p>${product.price}</p>
         <div className="flex items-center text-sm">
@@ -40,11 +46,19 @@ function Product({ product }: any) {
           (<p>{product?.numReviews}</p>)
         </div>
       </div>
-
-      <p className="italic text-xs w-64 line-clamp-2 text-gray-600">
+      <p className="italic text-xs w-64 line-clamp-2 text-gray-600 mb-1">
         {product.description}
       </p>
-    </Link>
+
+      <div className="space-y-3 text-sm">
+        <button
+          // onClick={() => dispatch({ type: "INCREMENT", product })}
+          className="button w-full bg-blue-600 text-white border-transparent hover:border-blue-600 hover:bg-transparent hover:text-black"
+        >
+          ADD TO BAG
+        </button>
+      </div>
+    </div>
   );
 }
 
