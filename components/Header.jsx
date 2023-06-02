@@ -33,7 +33,7 @@ const Header = () => {
       </Link>
 
       {/* Desktop Navigation */}
-      <div className="sm:flex hidden">
+      <div className="sm:flex">
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
             <Link href="/cart" className="relative">
