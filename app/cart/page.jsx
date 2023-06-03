@@ -77,7 +77,7 @@ const Cart = () => {
         (state?.cart.cartItems.length > 0 ? (
           <div className="w-[70%] bg-slate-100 px-2 py-4 rounded-sm mt-4">
             {state?.cart.cartItems.map((item, index) => (
-              <div className="flex  px-2 py-2">
+              <div className="flex  px-2 py-2" key={index}>
                 <Image
                   width={80}
                   height={80}

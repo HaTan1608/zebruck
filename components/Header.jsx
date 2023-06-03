@@ -53,7 +53,7 @@ const Header = () => {
             (state?.cart.cartItems.length > 0 ? (
               <div className="absolute top-100 right-0 w-96 bg-slate-100 px-2 py-2 rounded-md">
                 {state?.cart.cartItems.map((item, index) => (
-                  <div className="flex justify-between px-2 py-2">
+                  <div className="flex justify-between px-2 py-2" key={index}>
                     <Image
                       width={60}
                       height={60}
