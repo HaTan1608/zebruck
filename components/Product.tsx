@@ -46,13 +46,16 @@ function Product({ product }: any) {
           (<p>{product?.numReviews}</p>)
         </div>
       </div>
-      <p className="italic text-xs w-64 line-clamp-2 text-gray-600 mb-1">
+      <p
+        className="italic text-xs w-64 line-clamp-2 text-gray-600 mb-1"
+        onClick={() => console.log(state)}
+      >
         {product.description}
       </p>
 
       <div className="space-y-3 text-sm">
         <button
-          // onClick={() => dispatch({ type: "INCREMENT", product })}
+          onClick={() => dispatch({ type: "CART_ADD_ITEM", payload: product })}
           className="button w-full bg-blue-600 text-white border-transparent hover:border-blue-600 hover:bg-transparent hover:text-black"
         >
           ADD TO BAG
