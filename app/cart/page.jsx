@@ -14,9 +14,12 @@ const Cart = () => {
   const { state, dispatch } = useContext(CartContext);
   const { data: session } = useSession();
   // Search states
-  const [searchText, setSearchText] = useState("");
-  const [searchTimeout, setSearchTimeout] = useState(null);
-  const [searchedResults, setSearchedResults] = useState([]);
+  const [shippingInfo,setShippingInfo]=useState({
+    name:"",
+    email:"",
+    phone:"",
+    address:"",
+  });
 
   const createProduct = async () => {
     console.log("123123");
@@ -58,45 +61,58 @@ const Cart = () => {
   //     const searchResult = filterPrompts(tagName);
   //     setSearchedResults(searchResult);
   //   };
-  const handleSubmit = (value) => {};
+  const handleSubmit = (value) => {
+    console.log(value)
+    value.preventDefault()
+    dispatch({ type: "SAVE_SHIPPING_ADDRESS", payload: {...shippingInfo,email:session.user.email} });
+  };
   return (
     <section className="cart flex flex-col  pb-44 mt-14 px-4 py-4 h-screen">
       <h4 className="font-bold text-2xl">YOUR BAG</h4>
       <div className="flex flex-wrap justify-between ">
         {state?.cart.cartItems &&
           (state?.cart.cartItems.length > 0 ? (
-            <div className="w-full md:w-[70%]  bg-white px-2 py-4 rounded-md mt-4">
-              {state?.cart.cartItems.map((item, index) => (
-                <div className="flex  px-2 py-2" key={index}>
-                  <Image
-                    width={80}
-                    height={80}
-                    src={item?.images[0]?.image}
-                    alt={item?.images[0]?.image}
-                    className="rounded-sm"
-                  />
-                  <div className="w-full flex items-center flex-wrap px-4 max-w-[calc(100%-80px)]">
-                    <div className="truncate">{item.name}</div>
-                    <div className="flex justify-between items-center w-full">
-                      <div className="flex  items-center w-full">
-                        ${item.price}&nbsp;&nbsp;x&nbsp;&nbsp;
-                        <input
-                          type="number"
-                          value={item.qty}
-                          min={1}
-                          className="w-[40px] text-right"
-                          onChange={(e) =>
-                            dispatch({
-                              type: "CART_ITEM_QTY",
-                              payload: { product: item, value: e.target.value },
-                            })
-                          }
-                        />{" "}
-                        &nbsp;&nbsp; = &nbsp;&nbsp;$
-                        {item.price * item.qty}
-                      
-                      </div>
-                      <div
+            <div className="w-full md:w-[70%]  mt-4">
+              <div className="w-full bg-white  rounded-md px-2 py-4">
+                {state?.cart.cartItems.map((item, index) => (
+                  <div className="flex  px-2 py-2" key={index}>
+                    <Image
+                      width={80}
+                      height={80}
+                      src={item?.images[0]?.image}
+                      alt={item?.images[0]?.image}
+                      className="rounded-sm"
+                    />
+                    <div className="w-full flex items-center flex-wrap px-4 max-w-[calc(100%-80px)]">
+                      <Link
+                        href={`/product/${item._id}`}
+                        className="font-semibold flex items-center justify-between mt-4 mb-1"
+                      >
+                        <p className="truncate">{item.name}</p>
+                      </Link>
+                      <div className="flex justify-between items-center w-full">
+                        <div className="flex  items-center w-full">
+                          ${item.price}&nbsp;&nbsp;x&nbsp;&nbsp;
+                          <input
+                            type="number"
+                            value={item.qty}
+                            min={1}
+                            max={10}
+                            className="w-[40px] text-right"
+                            onChange={(e) =>
+                              dispatch({
+                                type: "CART_ITEM_QTY",
+                                payload: {
+                                  product: item,
+                                  value: e.target.value,
+                                },
+                              })
+                            }
+                          />{" "}
+                          &nbsp;&nbsp; = &nbsp;&nbsp;$
+                          {item.price * item.qty}
+                        </div>
+                        <div
                           className="flex justify-center items-center cursor-pointer"
                           onClick={() =>
                             dispatch({
@@ -107,18 +123,19 @@ const Cart = () => {
                         >
                           <TrashIcon width={20} height={20} fill="black" />
                         </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-              <div className="flex justify-between items-center w-full px-2 border-t border-black font-bold">
-                <div className="header__cart__total__text">TOTAL:</div>
-                <div className="">
-                  $
-                  {state?.cart.cartItems.reduce(
-                    (a, c) => a + c.price * c.qty,
-                    0
-                  )}
+                ))}
+                <div className="flex justify-between items-center w-full px-2 border-t border-black font-bold">
+                  <div className="header__cart__total__text">TOTAL:</div>
+                  <div className="">
+                    $
+                    {state?.cart.cartItems.reduce(
+                      (a, c) => a + c.price * c.qty,
+                      0
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -142,6 +159,7 @@ const Cart = () => {
                 disabled={!session?.user}
                 type="text"
                 id="name"
+                onChange={(e)=>setShippingInfo({...shippingInfo,name:e.target.value})}
                 class="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Enter recipient's phone"
                 required
@@ -156,7 +174,6 @@ const Cart = () => {
               </label>
               <input
                 disabled
-
                 value={session?.user?.email}
                 type="text"
                 id="email"
@@ -174,6 +191,7 @@ const Cart = () => {
               </label>
               <input
                 disabled={!session?.user}
+                onChange={(e)=>setShippingInfo({...shippingInfo,phone:e.target.value})}
                 type="text"
                 id="phone"
                 class=" mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -190,6 +208,7 @@ const Cart = () => {
               </label>
               <input
                 disabled={!session?.user}
+                onChange={(e)=>setShippingInfo({...shippingInfo,address:e.target.value})}
                 type="text"
                 id="address"
                 class=" mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

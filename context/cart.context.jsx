@@ -64,12 +64,13 @@ function reducer(state, action) {
       return { ...state, cart: { ...state.cart, cartItems: [] } };
 
     case "SAVE_SHIPPING_ADDRESS":
+      console.log(action.payload)
       return {
         ...state,
         cart: {
           ...state.cart,
           shippingAddress: {
-            ...state.cart.shippingAddress,
+         
             ...action.payload,
           },
         },

@@ -43,7 +43,7 @@ const Header = () => {
         >
           <ShoppingBagIcon className="h-8 w-8" />
           {state?.cart?.cartItems.reduce((a, c) => a + c.qty, 0) > 0 && (
-            <div className="font-bold text-red-500 absolute top-[-8px] right-[-8px] min-w-6 min-h-6 flex justify-center items-center rounded-full text-sm bg-white border border-black">
+            <div className="font-bold text-red-500 absolute top-[-8px] right-[-8px] w-6 h-6 flex justify-center items-center rounded-full text-sm bg-white border border-black">
               {state?.cart?.cartItems.reduce((a, c) => Number(a) + Number(c.qty), 0)}
             </div>
           )}
@@ -128,7 +128,7 @@ const Header = () => {
       <div className="sm:hidden flex relative">
         <Link href="/cart" className="relative mr-6">
           <ShoppingBagIcon className="h-8 w-8" />
-          <div className="font-bold text-red-500 absolute top-[-8px] right-[-8px] min-w-6 min-h-6 flex justify-center items-center rounded-full text-sm bg-white border border-black">
+          <div className="font-bold text-red-500 absolute top-[-8px] right-[-8px] w-6 h-6 flex justify-center items-center rounded-full text-sm bg-white border border-black">
             {state?.cart?.cartItems.reduce((a, c) => Number(a) + Number(c.qty), 0)}
           </div>
         </Link>
