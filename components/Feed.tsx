@@ -62,7 +62,7 @@ const Feed = () => {
   //   };
 
   return (
-    <section className="feed">
+    <section className="feed z-10">
       {/* <form className="relative w-full flex-center">
         <input
           type="text"
@@ -76,12 +76,12 @@ const Feed = () => {
 
       {/* All Prompts */}
       <h1
-        className="text-5xl font-bold text-center"
+        className="text-5xl font-bold mt-4 text-center"
         onClick={() => createProduct()}
       >
         DEALS OF THE DAY
       </h1>
-      <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+      <div className="grid grid-cols-1 mt-2 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
         {allProducts.map((product: any) => (
           <Product key={product.id} product={product} />
         ))}

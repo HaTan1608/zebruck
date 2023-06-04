@@ -1,5 +1,6 @@
 import Header from "@/components/Header.jsx";
 import "./globals.css";
+
 import { Montserrat } from "next/font/google";
 import Provider from "@/components/Provider";
 import { CartContextProvider } from "@/context/cart.context";
@@ -20,7 +21,7 @@ const montserrat = Montserrat({
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={montserrat.className}>
-      <body className=" max-w-[1240px]  mx-auto">
+      <body className=" max-w-[1240px]  mx-auto ">
         <Provider>
           <CartContextProvider>
             <div className="main">

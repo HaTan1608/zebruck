@@ -2,6 +2,7 @@ import ProductImage from "@/components/ProductImage";
 import { notFound } from "next/navigation";
 import { StarIcon as StarIconOutline } from "@heroicons/react/24/outline";
 import { StarIcon } from "@heroicons/react/24/solid";
+import ButtonAdd from "@/components/ButtonAdd";
 type Props = {
   params: {
     id: string;
@@ -35,10 +36,10 @@ async function ProductPage({ params: { id } }: Props) {
     const product: any = await res.json();
 
     return (
-      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-8 px-4 mt-48 pb-10">
+      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-8 px-4 mt-20 pb-10">
         <ProductImage product={product} />
 
-        <div className="divide-y">
+        <div className="divide-y flex items-between flex-wrap">
           <div className="space-y-2 pb-8">
             <h1 className="text-2xl md:text-4xl font-bold">{product.name}</h1>
             <div className="flex items-center text-sm my-2">
@@ -69,15 +70,12 @@ async function ProductPage({ params: { id } }: Props) {
             <h2 className="text-gray-500 font-bold text-xl md:text-3xl">
               ${product.price}
             </h2>
-          </div>
-
-          <div className="pt-8">
             <p className="text-xs md:text-sm">{product.description}</p>
           </div>
+
+         
           <div className="space-y-3 text-sm">
-            <button className="button w-full bg-blue-600 text-white border-transparent hover:border-blue-600 hover:bg-transparent hover:text-black">
-              Add to bag
-            </button>
+            <ButtonAdd product={product}/>
           </div>
         </div>
       </div>

@@ -18,7 +18,7 @@ function reducer(state, action) {
       const cartItems = existItem
         ? state?.cart?.cartItems?.map((item) =>
             item?._id === existItem?._id
-              ? { ...newItem, qty: existItem.qty + 1 }
+              ? { ...newItem, qty: Number(existItem.qty) + 1 }
               : item
           )
         : state?.cart?.cartItems?.length >= 0

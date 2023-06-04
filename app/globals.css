@@ -7,3 +7,10 @@
     @apply border px-5 md:px-10 py-2.5 rounded font-semibold transition duration-200 ease-out;
   }
 }
+
+html{
+
+  min-height:100vh;
+  background-image: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%)
+
+}
