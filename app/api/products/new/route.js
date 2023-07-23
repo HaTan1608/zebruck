@@ -1,5 +1,6 @@
 import Product from "@/models/product";
 import { connectToDB } from "@/utils/database";
+import { NextResponse } from "next/server";
 
 export const POST = async (request) => {
   //   const { userId, prompt, tag } = await request.json();
@@ -23,8 +24,8 @@ export const POST = async (request) => {
     });
 
     await newProduct.save();
-    return new Response(JSON.stringify(newProduct), { status: 201 });
+    return new NextResponse(JSON.stringify(newProduct), { status: 201 });
   } catch (error) {
-    return new Response(error, { status: 500 });
+    return new NextResponse(error, { status: 500 });
   }
 };

@@ -1,13 +1,13 @@
 import Product from "@/models/product";
 import { connectToDB } from "@/utils/database";
-
+import { NextResponse } from "next/server";
 export const GET = async (request) => {
   try {
     await connectToDB();
     const products = await Product.find({});
-    return new Response(JSON.stringify(products), { status: 200 });
+    return new NextResponse(JSON.stringify(products), { status: 200 });
   } catch (error) {
-    return new Response("Failed to fetch all products", { status: 500 });
+    return new NextResponse("Failed to fetch all products", { status: 500 });
   }
 };
 
@@ -28,8 +28,8 @@ export const POST = async (request) => {
     });
 
     await newProduct.save();
-    return new Response(JSON.stringify(newPrompt), { status: 201 });
+    return new NextResponse(JSON.stringify(newPrompt), { status: 201 });
   } catch (error) {
-    return new Response("Failed to fetch all products", { status: 500 });
+    return new NextResponse("Failed to fetch all products", { status: 500 });
   }
 };

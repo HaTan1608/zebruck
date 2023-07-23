@@ -11,10 +11,13 @@
   "dependencies": {
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^2.0.17",
+    "@paypal/react-paypal-js": "^8.1.0",
     "@types/node": "20.1.0",
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
+    "antd": "^5.7.2",
     "autoprefixer": "10.4.14",
+    "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.1",
@@ -26,6 +29,7 @@
     "postcss": "8.4.23",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-paypal-js": "^0.0.1-security",
     "tailwindcss": "3.3.2",
     "typescript": "5.0.4"
   }

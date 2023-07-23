@@ -1,5 +1,6 @@
 import Product from "@/models/product";
 import { connectToDB } from "@/utils/database";
+import { NextResponse } from "next/server";
 
 export const GET = async (request, { params }) => {
   try {
@@ -8,9 +9,9 @@ export const GET = async (request, { params }) => {
 
     const product = await Product.findById(params.id);
     console.log(product);
-    return new Response(JSON.stringify(product), { status: 200 });
+    return new NextResponse(JSON.stringify(product), { status: 200 });
   } catch (error) {
-    return new Response("Failed to fetch prompts created by user", {
+    return new NextResponse("Failed to fetch prompts created by user", {
       status: 500,
     });
   }

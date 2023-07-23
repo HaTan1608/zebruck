@@ -50,7 +50,7 @@ function reducer(state, action) {
     case "CART_ITEM_QTY":
       console.log(action.payload);
       const cartItems = state?.cart?.cartItems?.map((item) =>
-        item?._id ===  action?.payload?.product?._id
+        item?._id === action?.payload?.product?._id
           ? { ...item, qty: action.payload.value }
           : item
       );
@@ -64,17 +64,17 @@ function reducer(state, action) {
       return { ...state, cart: { ...state.cart, cartItems: [] } };
 
     case "SAVE_SHIPPING_ADDRESS":
-      console.log(action.payload)
+      console.log(action.payload);
       return {
         ...state,
         cart: {
           ...state.cart,
           shippingAddress: {
-         
             ...action.payload,
           },
         },
       };
+
     case "SAVE_PAYMENT_METHOD":
       return {
         ...state,

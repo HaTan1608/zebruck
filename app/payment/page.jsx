@@ -6,73 +6,48 @@ import { useEffect, useState } from "react";
 import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { TrashIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
+import { Checkbox } from "antd";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import { CartContext } from "@/context/cart.context";
 import React, { useContext } from "react";
-
+import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
+import axios from "axios";
 const Cart = (props) => {
   const { state, dispatch } = useContext(CartContext);
   const { data: session } = useSession();
-  // Search states
-  const [shippingInfo, setShippingInfo] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    address: "",
-  });
   const router = useRouter();
-  const createProduct = async () => {
-    console.log("123123");
-    try {
-      const response = await fetch("/api/products/new", state?.cart, {
-        method: "POST",
-      });
-    } catch (error) {
-      console.log(error);
-    } finally {
+
+  console.log(state?.cart);
+  useEffect(() => {
+    if (!state?.cart?.shippingAddress.address) {
+      router.push("/cart");
     }
-  };
-  //   const filterPrompts = (searchtext) => {
-  //     const regex = new RegExp(searchtext, "i"); // 'i' flag for case-insensitive search
-  //     return allPosts.filter(
-  //       (item) =>
-  //         regex.test(item.creator.username) ||
-  //         regex.test(item.tag) ||
-  //         regex.test(item.prompt)
-  //     );
-  //   };
+  }, []);
 
-  //   const handleSearchChange = (e) => {
-  //     clearTimeout(searchTimeout);
-  //     setSearchText(e.target.value);
-
-  //     // debounce method
-  //     setSearchTimeout(
-  //       setTimeout(() => {
-  //         const searchResult = filterPrompts(e.target.value);
-  //         setSearchedResults(searchResult);
-  //       }, 500)
-  //     );
-  //   };
-
-  //   const handleTagClick = (tagName) => {
-  //     setSearchText(tagName);
-
-  //     const searchResult = filterPrompts(tagName);
-  //     setSearchedResults(searchResult);
-  //   };
   const handleSubmit = (value) => {
+    console.log(value);
     value.preventDefault();
     dispatch({
       type: "SAVE_SHIPPING_ADDRESS",
       payload: { ...shippingInfo, email: session.user.email },
     });
-    router.push("/payment");
   };
-
+  const createProduct = async () => {
+    console.log("123123");
+    try {
+      await fetch("/api/orders/new", {
+        method: "POST",
+        body: JSON.stringify({
+          name: "123123",
+        }),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <section className="cart flex flex-col  pb-44 mt-14 px-4 py-4 h-screen">
-      <h4 className="font-bold text-2xl">YOUR BAG</h4>
+      <h4 className="font-bold text-2xl">YOUR ORDER</h4>
       <div className="flex flex-wrap justify-between ">
         {state?.cart.cartItems &&
           (state?.cart.cartItems.length > 0 ? (
@@ -116,17 +91,6 @@ const Cart = (props) => {
                           &nbsp;&nbsp; = &nbsp;&nbsp;$
                           {item.price * item.qty}
                         </div>
-                        <div
-                          className="flex justify-center items-center cursor-pointer"
-                          onClick={() =>
-                            dispatch({
-                              type: "CART_REMOVE_ITEM",
-                              payload: item,
-                            })
-                          }
-                        >
-                          <TrashIcon width={20} height={20} fill="black" />
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -160,15 +124,13 @@ const Cart = (props) => {
                 Name:
               </label>
               <input
-                disabled={!session?.user}
+                disabled
                 type="text"
                 id="name"
-                onChange={(e) =>
-                  setShippingInfo({ ...shippingInfo, name: e.target.value })
-                }
                 className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Enter recipient's phone"
                 required
+                value={state?.cart?.shippingAddress?.name}
               />
             </div>
             <div>
@@ -180,7 +142,7 @@ const Cart = (props) => {
               </label>
               <input
                 disabled
-                value={session?.user?.email || ""}
+                value={state?.cart?.shippingAddress?.email}
                 type="text"
                 id="email"
                 className=" mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -196,15 +158,13 @@ const Cart = (props) => {
                 Phone:
               </label>
               <input
-                disabled={!session?.user}
-                onChange={(e) =>
-                  setShippingInfo({ ...shippingInfo, phone: e.target.value })
-                }
+                disabled
                 type="text"
                 id="phone"
                 className=" mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Enter recipient's name"
+                placeholder="Enter recipient's phone"
                 required
+                value={state?.cart?.shippingAddress?.phone}
               />
             </div>
             <div>
@@ -215,10 +175,8 @@ const Cart = (props) => {
                 Address:
               </label>
               <input
-                disabled={!session?.user}
-                onChange={(e) =>
-                  setShippingInfo({ ...shippingInfo, address: e.target.value })
-                }
+                disabled
+                value={state?.cart?.shippingAddress?.address}
                 type="text"
                 id="address"
                 className=" mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -226,6 +184,31 @@ const Cart = (props) => {
                 required
               />
             </div>
+            <div>
+              <Checkbox>I have checked my order and shipping address</Checkbox>
+            </div>
+            <PayPalScriptProvider
+              options={{
+                clientId:
+                  "AZNh34UnWSPghdyZSKsxTqkvo8OcZCf83cisvwPaYJZ1Y8H9g5xF1-E_v57JBqQFgcMnB1pRV4hpGikW",
+              }}
+            >
+              <PayPalButtons
+                style={{ layout: "horizontal" }}
+                createOrder={(data, actions) => {
+                  createProduct()
+                    .then(function (res) {
+                      return res.json();
+                    })
+                    .then(function (data) {
+                      return data.token;
+                    });
+                }}
+                onApprove={(data, actions) => {
+                  return actions.order.capture().then(createProduct());
+                }}
+              />
+            </PayPalScriptProvider>
             <div className="flex-end mx-3 mt-5">
               <button
                 type="submit"
