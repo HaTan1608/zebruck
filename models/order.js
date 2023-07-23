@@ -3,7 +3,7 @@ import { Schema, model, models } from "mongoose";
 const orderSchema = new Schema(
   {
     user: { type: Schema.Types.ObjectId, ref: "User" },
-    orderItems: [
+    cartItems: [
       {
         name: { type: String },
         quantity: { type: Number },
@@ -12,7 +12,7 @@ const orderSchema = new Schema(
       },
     ],
     shippingAddress: {
-      fullName: { type: String },
+      name: { type: String },
       address: { type: String },
       phone: { type: String },
       email: { type: String },

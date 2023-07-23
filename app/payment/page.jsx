@@ -32,13 +32,14 @@ const Cart = (props) => {
       payload: { ...shippingInfo, email: session.user.email },
     });
   };
-  const createProduct = async () => {
+  const createProduct = async (details) => {
     console.log("123123");
     try {
       await fetch("/api/orders/new", {
         method: "POST",
         body: JSON.stringify({
-          name: "123123",
+          ...details,
+          ...state?.cart,
         }),
       });
     } catch (error) {
@@ -191,21 +192,39 @@ const Cart = (props) => {
               options={{
                 clientId:
                   "AZNh34UnWSPghdyZSKsxTqkvo8OcZCf83cisvwPaYJZ1Y8H9g5xF1-E_v57JBqQFgcMnB1pRV4hpGikW",
+                currency: "USD",
+                intent: "capture",
               }}
             >
               <PayPalButtons
                 style={{ layout: "horizontal" }}
                 createOrder={(data, actions) => {
-                  createProduct()
-                    .then(function (res) {
-                      return res.json();
-                    })
-                    .then(function (data) {
-                      return data.token;
-                    });
+                  return actions.order.create({
+                    purchase_units: [
+                      {
+                        amount: {
+                          value: state?.cart.cartItems.reduce(
+                            (a, c) => a + c.price * c.qty,
+                            0
+                          ),
+                        },
+                        // shipping: {
+                        //   name: {
+                        //     full_name: "Hans Muller",
+                        //   },
+                        //   address: {
+                        //     address_line_1: "MyStreet 12",
+                        //     country_code: "123123",
+                        //   },
+                        // },
+                      },
+                    ],
+                  });
                 }}
                 onApprove={(data, actions) => {
-                  return actions.order.capture().then(createProduct());
+                  return actions.order.capture().then((details) => {
+                    createProduct(details);
+                  });
                 }}
               />
             </PayPalScriptProvider>

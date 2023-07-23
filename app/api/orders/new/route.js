@@ -3,16 +3,15 @@ import { connectToDB } from "@/utils/database";
 import { NextResponse } from "next/server";
 
 export const POST = async (request) => {
-  let a = request.cookies.get("cart")?.value;
-  console.log(JSON.parse(a));
-  const body = await request.cookies;
+  console.log(request.cookies.get("cart")?.value);
+  const body = await JSON.parse(request.cookies.get("cart")?.value);
 
-  const newPost = new Order(body);
+  const newOrder = new Order({ ...body });
 
   try {
     await connectToDB();
 
-    await newPost.save();
+    await newOrder.save();
 
     return new NextResponse("Post has been created", { status: 201 });
   } catch (err) {
