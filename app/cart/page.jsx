@@ -19,6 +19,9 @@ const Cart = (props) => {
     email: "",
     phone: "",
     address: "",
+    zipCode: "",
+    country: "",
+    city: "",
   });
   const router = useRouter();
   const createProduct = async () => {
@@ -207,6 +210,7 @@ const Cart = (props) => {
                 required
               />
             </div>
+
             <div>
               <label
                 htmlFor="address"
@@ -222,7 +226,64 @@ const Cart = (props) => {
                 type="text"
                 id="address"
                 className=" mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Enter recipient's address"
+                placeholder="Enter recipient's address , city, state/province"
+                required
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="country"
+                className="block  text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Country:
+              </label>
+              <input
+                disabled={!session?.user}
+                onChange={(e) =>
+                  setShippingInfo({ ...shippingInfo, country: e.target.value })
+                }
+                type="text"
+                id="country"
+                className=" mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter Country"
+                required
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="city"
+                className="block  text-sm font-medium text-gray-900 dark:text-white"
+              >
+                City:
+              </label>
+              <input
+                disabled={!session?.user}
+                onChange={(e) =>
+                  setShippingInfo({ ...shippingInfo, city: e.target.value })
+                }
+                type="text"
+                id="city"
+                className=" mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter Country"
+                required
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="zipCode"
+                className="block  text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Zip/Postal Code:
+              </label>
+              <input
+                disabled={!session?.user}
+                onChange={(e) =>
+                  setShippingInfo({ ...shippingInfo, zipCode: e.target.value })
+                }
+                type="text"
+                id="zipCode"
+                className=" mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter Zip/Postal Code"
                 required
               />
             </div>

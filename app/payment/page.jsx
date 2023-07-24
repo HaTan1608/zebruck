@@ -33,7 +33,7 @@ const Cart = (props) => {
     });
   };
   const createProduct = async (details) => {
-    console.log("123123");
+    console.log("123123", details);
     try {
       await fetch("/api/orders/new", {
         method: "POST",
@@ -181,7 +181,58 @@ const Cart = (props) => {
                 type="text"
                 id="address"
                 className=" mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Enter recipient's address"
+                placeholder="Enter recipient's address , city, state/province"
+                required
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="country"
+                className="block  text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Country:
+              </label>
+              <input
+                disabled
+                value={state?.cart?.shippingAddress?.country}
+                type="text"
+                id="country"
+                className=" mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter Country"
+                required
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="city"
+                className="block  text-sm font-medium text-gray-900 dark:text-white"
+              >
+                City:
+              </label>
+              <input
+                disabled
+                value={state?.cart?.shippingAddress?.city}
+                type="text"
+                id="city"
+                className=" mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter Country"
+                required
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="zipCode"
+                className="block  text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Zip/Postal Code:
+              </label>
+              <input
+                disabled
+                value={state?.cart?.shippingAddress?.zipCode}
+                type="text"
+                id="zipCode"
+                className=" mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter Zip/Postal Code"
                 required
               />
             </div>
@@ -200,23 +251,53 @@ const Cart = (props) => {
                 style={{ layout: "horizontal" }}
                 createOrder={(data, actions) => {
                   return actions.order.create({
+                    application_context: {
+                      brand_name: "Zebruck",
+                      locale: "us-US",
+                      shipping_preference: "SET_PROVIDED_ADDRESS",
+                    },
                     purchase_units: [
                       {
+                        items: state?.cart?.cartItems.map((x) => {
+                          return {
+                            name: x.name,
+                            quantity: x.qty,
+                            unit_amount: {
+                              currency_code: "USD",
+                              value: x.price,
+                            },
+                          };
+                        }),
                         amount: {
                           value: state?.cart.cartItems.reduce(
                             (a, c) => a + c.price * c.qty,
                             0
                           ),
+
+                          currency_code: "USD",
+                          breakdown: {
+                            item_total: {
+                              value: state?.cart.cartItems.reduce(
+                                (a, c) => a + c.price * c.qty,
+                                0
+                              ),
+                              currency_code: "USD",
+                            },
+                          },
                         },
-                        // shipping: {
-                        //   name: {
-                        //     full_name: "Hans Muller",
-                        //   },
-                        //   address: {
-                        //     address_line_1: "MyStreet 12",
-                        //     country_code: "123123",
-                        //   },
-                        // },
+                        shipping: {
+                          name: {
+                            full_name: state?.cart?.shippingAddress?.name,
+                          },
+                          address: {
+                            address_line_1:
+                              state?.cart?.shippingAddress?.address,
+                            admin_area_2: state?.cart?.shippingAddress?.city,
+                            admin_area_1: state?.cart?.shippingAddress?.country,
+                            postal_code: state?.cart?.shippingAddress?.zipCode,
+                            country_code: "VN",
+                          },
+                        },
                       },
                     ],
                   });
