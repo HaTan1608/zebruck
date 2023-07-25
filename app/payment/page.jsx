@@ -5,8 +5,9 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { TrashIcon } from "@heroicons/react/24/solid";
+import { AiFillCheckCircle } from "react-icons/ai";
 import { useRouter } from "next/navigation";
-import { Checkbox } from "antd";
+import { Checkbox, Button, Modal } from "antd";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import { CartContext } from "@/context/cart.context";
 import React, { useContext } from "react";
@@ -16,8 +17,8 @@ const Cart = (props) => {
   const { state, dispatch } = useContext(CartContext);
   const { data: session } = useSession();
   const router = useRouter();
-
-  console.log(state?.cart);
+  const [checked, setChecked] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   useEffect(() => {
     if (!state?.cart?.shippingAddress.address) {
       router.push("/cart");
@@ -33,7 +34,7 @@ const Cart = (props) => {
     });
   };
   const createProduct = async (details) => {
-    console.log("123123");
+    console.log("123123", details);
     try {
       await fetch("/api/orders/new", {
         method: "POST",
@@ -42,12 +43,50 @@ const Cart = (props) => {
           ...state?.cart,
         }),
       });
+      setIsModalOpen(true);
     } catch (error) {
       console.log(error);
     }
   };
   return (
     <section className="cart flex flex-col  pb-44 mt-14 px-4 py-4 h-screen">
+      <Modal
+        title=""
+        open={true}
+        onCancel={() => setIsModalOpen(false)}
+        footer={null}
+        centered
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexWrap: "wrap",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
+            <AiFillCheckCircle size={72} color="rgb(0,255,0)" />
+          </div>
+          <p
+            style={{
+              fontWeight: "18px",
+              textTransform: "uppercase",
+              fontWeight: "700",
+            }}
+          >
+            Your order have been created
+          </p>
+          <p>You can check order's status in your profile</p>
+        </div>
+      </Modal>
       <h4 className="font-bold text-2xl">YOUR ORDER</h4>
       <div className="flex flex-wrap justify-between ">
         {state?.cart.cartItems &&
@@ -181,12 +220,68 @@ const Cart = (props) => {
                 type="text"
                 id="address"
                 className=" mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Enter recipient's address"
+                placeholder="Enter recipient's address , city, state/province"
                 required
               />
             </div>
             <div>
-              <Checkbox>I have checked my order and shipping address</Checkbox>
+              <label
+                htmlFor="country"
+                className="block  text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Country:
+              </label>
+              <input
+                disabled
+                value={state?.cart?.shippingAddress?.country}
+                type="text"
+                id="country"
+                className=" mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter Country"
+                required
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="city"
+                className="block  text-sm font-medium text-gray-900 dark:text-white"
+              >
+                City:
+              </label>
+              <input
+                disabled
+                value={state?.cart?.shippingAddress?.city}
+                type="text"
+                id="city"
+                className=" mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter Country"
+                required
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="zipCode"
+                className="block  text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Zip/Postal Code:
+              </label>
+              <input
+                disabled
+                value={state?.cart?.shippingAddress?.zipCode}
+                type="text"
+                id="zipCode"
+                className=" mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter Zip/Postal Code"
+                required
+              />
+            </div>
+            <div style={{ marginBottom: "20px" }}>
+              <Checkbox
+                checked={checked}
+                onChange={(e) => setChecked(e.target.checked)}
+              >
+                I have checked my order and shipping address
+              </Checkbox>
             </div>
             <PayPalScriptProvider
               options={{
@@ -197,26 +292,57 @@ const Cart = (props) => {
               }}
             >
               <PayPalButtons
+                disabled={!checked}
                 style={{ layout: "horizontal" }}
                 createOrder={(data, actions) => {
                   return actions.order.create({
+                    application_context: {
+                      brand_name: "Zebruck",
+                      locale: "us-US",
+                      shipping_preference: "SET_PROVIDED_ADDRESS",
+                    },
                     purchase_units: [
                       {
+                        items: state?.cart?.cartItems.map((x) => {
+                          return {
+                            name: x.name,
+                            quantity: x.qty,
+                            unit_amount: {
+                              currency_code: "USD",
+                              value: x.price,
+                            },
+                          };
+                        }),
                         amount: {
                           value: state?.cart.cartItems.reduce(
                             (a, c) => a + c.price * c.qty,
                             0
                           ),
+
+                          currency_code: "USD",
+                          breakdown: {
+                            item_total: {
+                              value: state?.cart.cartItems.reduce(
+                                (a, c) => a + c.price * c.qty,
+                                0
+                              ),
+                              currency_code: "USD",
+                            },
+                          },
                         },
-                        // shipping: {
-                        //   name: {
-                        //     full_name: "Hans Muller",
-                        //   },
-                        //   address: {
-                        //     address_line_1: "MyStreet 12",
-                        //     country_code: "123123",
-                        //   },
-                        // },
+                        shipping: {
+                          name: {
+                            full_name: state?.cart?.shippingAddress?.name,
+                          },
+                          address: {
+                            address_line_1:
+                              state?.cart?.shippingAddress?.address,
+                            admin_area_2: state?.cart?.shippingAddress?.city,
+                            admin_area_1: state?.cart?.shippingAddress?.country,
+                            postal_code: state?.cart?.shippingAddress?.zipCode,
+                            country_code: "VN",
+                          },
+                        },
                       },
                     ],
                   });
@@ -228,19 +354,6 @@ const Cart = (props) => {
                 }}
               />
             </PayPalScriptProvider>
-            <div className="flex-end mx-3 mt-5">
-              <button
-                type="submit"
-                // disabled={submitting}
-                className={`px-5 py-1.5 text-sm  w-full rounded-full text-white ${
-                  session?.user
-                    ? "bg-blue-600 "
-                    : "bg-slate-400 cursor-not-allowed"
-                }`}
-              >
-                {session?.user ? "GO PAYMENT" : "PLEASE SIGN IN BEFORE"}
-              </button>
-            </div>
           </form>
         </div>
       </div>
