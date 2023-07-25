@@ -52,7 +52,7 @@ const Cart = (props) => {
     <section className="cart flex flex-col  pb-44 mt-14 px-4 py-4 h-screen">
       <Modal
         title=""
-        open={true}
+        open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
         footer={null}
         centered
