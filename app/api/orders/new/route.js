@@ -1,4 +1,4 @@
-import Order from "@/models/Order";
+import Order from "@/models/order";
 import { connectToDB } from "@/utils/database";
 import { NextResponse } from "next/server";
 
