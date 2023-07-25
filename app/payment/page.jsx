@@ -84,7 +84,7 @@ const Cart = (props) => {
           >
             Your order have been created
           </p>
-          <p>You can check order's status in your profile</p>
+          <p>You can check order&apos;s status in your profile</p>
         </div>
       </Modal>
       <h4 className="font-bold text-2xl">YOUR ORDER</h4>
