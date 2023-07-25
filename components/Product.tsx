@@ -7,7 +7,7 @@ import React, { useContext } from "react";
 function Product({ product }: any) {
   const { state, dispatch } = useContext(CartContext);
   return (
-    <div className="h-96 flex flex-col p-5 rounded border border-white group hover:scale-105 transition-transform ease-out duration-200">
+    <div className="h-96 flex flex-col p-5 rounded border border-white group hover:scale-105 transition-transform ease-out duration-200 bg-white">
       <Link
         href={`/product/${product._id}`}
         className="relative max-h-72 flex-1"
