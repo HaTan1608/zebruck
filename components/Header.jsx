@@ -44,7 +44,10 @@ const Header = () => {
           <ShoppingBagIcon className="h-8 w-8" />
           {state?.cart?.cartItems.reduce((a, c) => a + c.qty, 0) > 0 && (
             <div className="font-bold text-red-500 absolute top-[-8px] right-[-8px] w-6 h-6 flex justify-center items-center rounded-full text-sm bg-white border border-black">
-              {state?.cart?.cartItems.reduce((a, c) => Number(a) + Number(c.qty), 0)}
+              {state?.cart?.cartItems.reduce(
+                (a, c) => Number(a) + Number(c.qty),
+                0
+              )}
             </div>
           )}
 
@@ -85,7 +88,9 @@ const Header = () => {
                 </div>
               </div>
             ) : (
-              <div className="header__cart__items__empty">BAG IS EMPTY</div>
+              <div className="absolute top-100 right-0 w-96 h-16 flex justify-center items-center bg-slate-100 px-2 py-2 rounded-md">
+                BAG IS EMPTY
+              </div>
             ))}
         </Link>
         {session?.user ? (
@@ -129,7 +134,10 @@ const Header = () => {
         <Link href="/cart" className="relative mr-6">
           <ShoppingBagIcon className="h-8 w-8" />
           <div className="font-bold text-red-500 absolute top-[-8px] right-[-8px] w-6 h-6 flex justify-center items-center rounded-full text-sm bg-white border border-black">
-            {state?.cart?.cartItems.reduce((a, c) => Number(a) + Number(c.qty), 0)}
+            {state?.cart?.cartItems.reduce(
+              (a, c) => Number(a) + Number(c.qty),
+              0
+            )}
           </div>
         </Link>
         {session?.user ? (

@@ -47,7 +47,7 @@ function Product({ product }: any) {
         </div>
       </div>
       <p
-        className="italic text-xs w-64 line-clamp-2 text-gray-600 mb-1"
+        className="italic text-xs  line-clamp-2 text-gray-600 mb-1"
         onClick={() => console.log(state)}
       >
         {product.description}

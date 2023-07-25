@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import { CartContext } from "@/context/cart.context";
 import React, { useContext } from "react";
-
 const Cart = (props) => {
   const { state, dispatch } = useContext(CartContext);
   const { data: session } = useSession();
@@ -144,103 +143,132 @@ const Cart = (props) => {
               </div>
             </div>
           ) : (
-            <div className="header__cart__items__empty">BAG IS EMPTY</div>
+            <div className="w-full flex items-center justify-center h-[50vh] flex-wrap flex-col">
+              <div className="w-full flex items-center justify-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-36 h-36"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                  />
+                </svg>
+              </div>
+              <div className="w-full text-center">EMPTY CART</div>
+              <div
+                onClick={() => router.push("/")}
+                className="w-full text-center mt-12 cursor-pointer"
+              >
+                BACK TO SHOPPING
+              </div>
+            </div>
           ))}
-        <div className="w-full md:w-[28%]   mt-4 ">
-          <form
-            onSubmit={handleSubmit}
-            className={` bg-white w-full rounded-md px-4 py-4 w-full  flex flex-col glassmorphism`}
-          >
-            <p className="font-bold">SHIP INFORMATION</p>
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Name:
-              </label>
-              <input
-                disabled={!session?.user}
-                type="text"
-                id="name"
-                onChange={(e) =>
-                  setShippingInfo({ ...shippingInfo, name: e.target.value })
-                }
-                className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Enter recipient's phone"
-                required
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="email"
-                className="block  text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Email:
-              </label>
-              <input
-                disabled
-                value={session?.user?.email || ""}
-                type="text"
-                id="email"
-                className=" mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="John"
-                required
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="phone"
-                className="block  text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Phone:
-              </label>
-              <input
-                disabled={!session?.user}
-                onChange={(e) =>
-                  setShippingInfo({ ...shippingInfo, phone: e.target.value })
-                }
-                type="text"
-                id="phone"
-                className=" mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Enter recipient's name"
-                required
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="address"
-                className="block  text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Address:
-              </label>
-              <input
-                disabled={!session?.user}
-                onChange={(e) =>
-                  setShippingInfo({ ...shippingInfo, address: e.target.value })
-                }
-                type="text"
-                id="address"
-                className=" mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Enter recipient's address"
-                required
-              />
-            </div>
-            <div className="flex-end mx-3 mt-5">
-              <button
-                type="submit"
-                // disabled={submitting}
-                className={`px-5 py-1.5 text-sm  w-full rounded-full text-white ${
-                  session?.user
-                    ? "bg-blue-600 "
-                    : "bg-slate-400 cursor-not-allowed"
-                }`}
-              >
-                {session?.user ? "GO PAYMENT" : "PLEASE SIGN IN BEFORE"}
-              </button>
-            </div>
-          </form>
-        </div>
+        {state?.cart.cartItems && state?.cart.cartItems.length > 0 && (
+          <div className="w-full md:w-[28%]   mt-4 ">
+            <form
+              onSubmit={handleSubmit}
+              className={` bg-white w-full rounded-md px-4 py-4  flex flex-col glassmorphism`}
+            >
+              <p className="font-bold">SHIP INFORMATION</p>
+              <div>
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Name:
+                </label>
+                <input
+                  disabled={!session?.user}
+                  type="text"
+                  id="name"
+                  onChange={(e) =>
+                    setShippingInfo({ ...shippingInfo, name: e.target.value })
+                  }
+                  className="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Enter recipient's phone"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block  text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Email:
+                </label>
+                <input
+                  disabled
+                  value={session?.user?.email || ""}
+                  type="text"
+                  id="email"
+                  className=" mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="John"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="phone"
+                  className="block  text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Phone:
+                </label>
+                <input
+                  disabled={!session?.user}
+                  onChange={(e) =>
+                    setShippingInfo({ ...shippingInfo, phone: e.target.value })
+                  }
+                  type="text"
+                  id="phone"
+                  className=" mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Enter recipient's name"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="address"
+                  className="block  text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Address:
+                </label>
+                <input
+                  disabled={!session?.user}
+                  onChange={(e) =>
+                    setShippingInfo({
+                      ...shippingInfo,
+                      address: e.target.value,
+                    })
+                  }
+                  type="text"
+                  id="address"
+                  className=" mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Enter recipient's address"
+                  required
+                />
+              </div>
+              <div className="flex-end mx-3 mt-5">
+                <button
+                  type="submit"
+                  // disabled={submitting}
+                  className={`px-5 py-1.5 text-sm  w-full rounded-full text-white ${
+                    session?.user
+                      ? "bg-blue-600 "
+                      : "bg-slate-400 cursor-not-allowed"
+                  }`}
+                >
+                  {session?.user ? "GO PAYMENT" : "PLEASE SIGN IN BEFORE"}
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
       </div>
     </section>
   );

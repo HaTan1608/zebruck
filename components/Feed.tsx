@@ -1,7 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
 import Product from "./Product";
-
+import Image from "next/image";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 const Feed = () => {
   const [allProducts, setAllProducts] = useState([]);
 
@@ -9,7 +11,25 @@ const Feed = () => {
   const [searchText, setSearchText] = useState("");
   const [searchTimeout, setSearchTimeout] = useState(null);
   const [searchedResults, setSearchedResults] = useState([]);
-
+  const responsive = {
+    superLargeDesktop: {
+      // the naming can be any, depends on you.
+      breakpoint: { max: 4000, min: 3000 },
+      items: 5,
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 4,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 3,
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 2,
+    },
+  };
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch(`/api/products`);
@@ -73,19 +93,67 @@ const Feed = () => {
           className="search_input peer"
         />
       </form> */}
-
       {/* All Prompts */}
+      <div style={{ width: "100%" }}>
+        {" "}
+        <Image
+          src="/assets/images/banner.jpeg"
+          alt="logo"
+          width={500}
+          height={500}
+          sizes="(max-width: 768px) 100vw"
+          className="object-contain"
+        />
+      </div>
       <h1
         className="text-5xl font-bold mt-4 text-center"
         onClick={() => createProduct()}
       >
-        DEALS OF THE DAY
+        NEW COLLECTION
       </h1>
-      <div className="grid grid-cols-1 mt-2 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+      <Carousel
+        responsive={responsive}
+        autoPlaySpeed={5000}
+        keyBoardControl={true}
+        customTransition="all .5"
+        transitionDuration={500}
+        removeArrowOnDeviceType={["tablet", "mobile"]}
+        swipeable={false}
+        draggable={false}
+        showDots={false}
+        infinite={true}
+        autoPlay={true}
+        itemClass="carousel-item-padding-40-px"
+      >
         {allProducts.map((product: any) => (
           <Product key={product.id} product={product} />
         ))}
-      </div>
+      </Carousel>
+      <h1
+        className="text-5xl font-bold mt-4 text-center"
+        onClick={() => createProduct()}
+      >
+        BEST SELLER
+      </h1>
+      <Carousel
+        responsive={responsive}
+        autoPlaySpeed={5000}
+        keyBoardControl={true}
+        customTransition="all .5"
+        transitionDuration={500}
+        removeArrowOnDeviceType={["tablet", "mobile"]}
+        swipeable={false}
+        draggable={false}
+        showDots={false}
+        autoPlay={true}
+        infinite={true}
+        itemClass="carousel-item-padding-40-px"
+      >
+        {allProducts.map((product: any) => (
+          <Product key={product.id} product={product} />
+        ))}
+      </Carousel>
+
       {/* {searchText ? (
         <PromptCardList
           data={searchedResults}
