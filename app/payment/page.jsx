@@ -5,8 +5,9 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 import { TrashIcon } from "@heroicons/react/24/solid";
+import { AiFillCheckCircle } from "react-icons/ai";
 import { useRouter } from "next/navigation";
-import { Checkbox } from "antd";
+import { Checkbox, Button, Modal } from "antd";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import { CartContext } from "@/context/cart.context";
 import React, { useContext } from "react";
@@ -16,8 +17,8 @@ const Cart = (props) => {
   const { state, dispatch } = useContext(CartContext);
   const { data: session } = useSession();
   const router = useRouter();
-
-  console.log(state?.cart);
+  const [checked, setChecked] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   useEffect(() => {
     if (!state?.cart?.shippingAddress.address) {
       router.push("/cart");
@@ -42,12 +43,50 @@ const Cart = (props) => {
           ...state?.cart,
         }),
       });
+      setIsModalOpen(true);
     } catch (error) {
       console.log(error);
     }
   };
   return (
     <section className="cart flex flex-col  pb-44 mt-14 px-4 py-4 h-screen">
+      <Modal
+        title=""
+        open={true}
+        onCancel={() => setIsModalOpen(false)}
+        footer={null}
+        centered
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexWrap: "wrap",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
+            <AiFillCheckCircle size={72} color="rgb(0,255,0)" />
+          </div>
+          <p
+            style={{
+              fontWeight: "18px",
+              textTransform: "uppercase",
+              fontWeight: "700",
+            }}
+          >
+            Your order have been created
+          </p>
+          <p>You can check order's status in your profile</p>
+        </div>
+      </Modal>
       <h4 className="font-bold text-2xl">YOUR ORDER</h4>
       <div className="flex flex-wrap justify-between ">
         {state?.cart.cartItems &&
@@ -236,8 +275,13 @@ const Cart = (props) => {
                 required
               />
             </div>
-            <div>
-              <Checkbox>I have checked my order and shipping address</Checkbox>
+            <div style={{ marginBottom: "20px" }}>
+              <Checkbox
+                checked={checked}
+                onChange={(e) => setChecked(e.target.checked)}
+              >
+                I have checked my order and shipping address
+              </Checkbox>
             </div>
             <PayPalScriptProvider
               options={{
@@ -248,6 +292,7 @@ const Cart = (props) => {
               }}
             >
               <PayPalButtons
+                disabled={!checked}
                 style={{ layout: "horizontal" }}
                 createOrder={(data, actions) => {
                   return actions.order.create({
@@ -309,19 +354,6 @@ const Cart = (props) => {
                 }}
               />
             </PayPalScriptProvider>
-            <div className="flex-end mx-3 mt-5">
-              <button
-                type="submit"
-                // disabled={submitting}
-                className={`px-5 py-1.5 text-sm  w-full rounded-full text-white ${
-                  session?.user
-                    ? "bg-blue-600 "
-                    : "bg-slate-400 cursor-not-allowed"
-                }`}
-              >
-                {session?.user ? "GO PAYMENT" : "PLEASE SIGN IN BEFORE"}
-              </button>
-            </div>
           </form>
         </div>
       </div>
