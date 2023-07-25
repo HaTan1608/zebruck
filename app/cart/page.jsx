@@ -70,7 +70,6 @@ const Cart = (props) => {
       type: "SAVE_SHIPPING_ADDRESS",
       payload: { ...shippingInfo, email: session.user.email },
     });
-    router.push("/payment");
   };
 
   return (

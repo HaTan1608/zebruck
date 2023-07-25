@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 
 export const POST = async (request) => {
   console.log(request.cookies.get("cart")?.value);
+  console.log(request.cookies.get("cart")?.value);
   const body = await JSON.parse(request.cookies.get("cart")?.value);
 
   const newOrder = new Order({ ...body });

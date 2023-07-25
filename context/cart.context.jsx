@@ -1,7 +1,7 @@
 "use client";
 
 import React, { Dispatch, createContext, useReducer } from "react";
-
+import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 const initialState = {
   cart: Cookies.get("cart")
@@ -9,6 +9,7 @@ const initialState = {
     : { cartItems: [], shippingAddress: {}, paymentMethod: "" },
 };
 function reducer(state, action) {
+  const router = useRouter();
   switch (action.type) {
     case "CART_ADD_ITEM": {
       const newItem = action.payload;
@@ -64,7 +65,7 @@ function reducer(state, action) {
       return { ...state, cart: { ...state.cart, cartItems: [] } };
 
     case "SAVE_SHIPPING_ADDRESS":
-      console.log(action.payload);
+      router.push("/payment")
       return {
         ...state,
         cart: {
