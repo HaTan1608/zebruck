@@ -1,4 +1,6 @@
 import Header from "@/components/Header.jsx";
+import Footer from "@/components/Footer.jsx";
+
 import "./globals.css";
 
 import { Montserrat } from "next/font/google";
@@ -29,6 +31,7 @@ export default function RootLayout({ children }) {
             </div>
             <Header />
             {children}
+            <Footer />
           </CartContextProvider>
         </Provider>
       </body>
