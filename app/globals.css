@@ -4,7 +4,7 @@
 
 @layer components {
   .button {
-    @apply border px-5 md:px-10 py-2.5 rounded font-semibold transition duration-200 ease-out;
+    @apply border px-3 md:px-10 py-1.5 md:py-2.5 rounded font-semibold transition duration-200 ease-out text-xs md:text-base;
   }
 }
 
@@ -15,4 +15,30 @@ html {
 
 .carousel-item-padding-40-px {
   padding: 24px;
+}
+
+@media only screen and (max-width: 767px) {
+  .carousel-item-padding-40-px {
+    padding: 4px;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .carousel-item-padding-40-px {
+    padding: 24px;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  body {
+    background-color: lightblue;
+  }
+}
+@media only screen and (min-width: 1280px) {
+  body {
+    background-color: lightblue;
+  }
+}
+@media only screen and (min-width: 1536px) {
+  body {
+    background-color: lightblue;
+  }
 }

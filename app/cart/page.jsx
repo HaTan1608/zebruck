@@ -91,7 +91,7 @@ const Cart = (props) => {
                     <div className="w-full flex items-center flex-wrap px-4 max-w-[calc(100%-80px)]">
                       <Link
                         href={`/product/${item._id}`}
-                        className="font-semibold flex items-center justify-between mt-4 mb-1"
+                        className="w-full font-semibold flex items-center justify-between mt-4 mb-1"
                       >
                         <p className="truncate">{item.name}</p>
                       </Link>

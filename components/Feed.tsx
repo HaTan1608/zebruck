@@ -23,11 +23,11 @@ const Feed = () => {
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
-      items: 2,
+      items: 3,
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 1,
+      items: 2,
     },
   };
   useEffect(() => {
@@ -106,7 +106,7 @@ const Feed = () => {
         />
       </div>
       <h1
-        className="text-5xl font-bold mt-4 text-center"
+        className="font-bold mt-4 text-center text-xl md:text-5xl"
         onClick={() => createProduct()}
       >
         NEW COLLECTION
@@ -130,7 +130,7 @@ const Feed = () => {
         ))}
       </Carousel>
       <h1
-        className="text-5xl font-bold mt-4 text-center"
+        className=" font-bold mt-4 text-center text-xl md:text-5xl"
         onClick={() => createProduct()}
       >
         BEST SELLER
@@ -153,7 +153,9 @@ const Feed = () => {
           <Product key={product.id} product={product} />
         ))}
       </Carousel>
-
+      {allProducts.map((product: any) => (
+        <Product key={product.id} product={product} />
+      ))}
       {/* {searchText ? (
         <PromptCardList
           data={searchedResults}
