@@ -13,9 +13,6 @@ html {
   background-image: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
 }
 
-.carousel-item-padding-40-px {
-  padding: 24px;
-}
 
 @media only screen and (max-width: 767px) {
   .carousel-item-padding-40-px {
@@ -24,21 +21,15 @@ html {
 }
 @media only screen and (min-width: 768px) {
   .carousel-item-padding-40-px {
-    padding: 24px;
+    padding: 12px;
   }
 }
 @media only screen and (min-width: 1024px) {
-  body {
-    background-color: lightblue;
-  }
+ 
 }
 @media only screen and (min-width: 1280px) {
-  body {
-    background-color: lightblue;
-  }
+ 
 }
 @media only screen and (min-width: 1536px) {
-  body {
-    background-color: lightblue;
-  }
+ 
 }
