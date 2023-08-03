@@ -94,7 +94,19 @@ const Feed = () => {
         />
       </form> */}
       {/* All Prompts */}
-      <div style={{ width: "100%" }}>
+      <h1
+        className="font-bold mt-4 text-center text-2xl md:text-5xl"
+        onClick={() => createProduct()}
+      >
+        Zebruck
+      </h1>
+      <h1
+        className="mt-[-8px] text-center text- "
+        onClick={() => createProduct()}
+      >
+        Let venti coffee cups express your personal quality
+      </h1>
+      <div className="w-full mt-2">
         {" "}
         <Image
           src="/assets/images/banner.jpeg"
@@ -153,9 +165,11 @@ const Feed = () => {
           <Product key={product.id} product={product} />
         ))}
       </Carousel>
-      {allProducts.map((product: any) => (
-        <Product key={product.id} product={product} />
-      ))}
+      <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+        {allProducts.map((product: any) => (
+          <Product key={product.id} product={product} />
+        ))}
+      </div>
       {/* {searchText ? (
         <PromptCardList
           data={searchedResults}
