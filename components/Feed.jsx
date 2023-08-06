@@ -137,7 +137,7 @@ const Feed = () => {
         autoPlay={true}
         itemClass="carousel-item-padding-40-px"
       >
-        {allProducts.map((product: any) => (
+        {allProducts.map((product) => (
           <Product key={product.id} product={product} />
         ))}
       </Carousel>
@@ -161,7 +161,7 @@ const Feed = () => {
         infinite={true}
         itemClass="carousel-item-padding-40-px"
       >
-        {allProducts.map((product: any) => (
+        {allProducts.map((product) => (
           <Product key={product.id} product={product} />
         ))}
       </Carousel>
@@ -185,7 +185,7 @@ const Feed = () => {
         infinite={true}
         itemClass="carousel-item-padding-40-px"
       >
-        {allProducts.map((product: any) => (
+        {allProducts.map((product) => (
           <Product key={product.id} product={product} />
         ))}
       </Carousel>
