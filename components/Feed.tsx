@@ -101,10 +101,10 @@ const Feed = () => {
         Zebruck
       </h1>
       <h1
-        className="mt-[-8px] text-center text- "
+        className="mt-[-4px] text-center text- "
         onClick={() => createProduct()}
       >
-        Let venti coffee cups express your personal quality
+        Let coffee cups express your personal quality
       </h1>
       <div className="w-full mt-2">
         {" "}
@@ -165,11 +165,30 @@ const Feed = () => {
           <Product key={product.id} product={product} />
         ))}
       </Carousel>
-      <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+      <h1
+        className=" font-bold mt-4 text-center text-xl md:text-5xl"
+        onClick={() => createProduct()}
+      >
+        OTHER ITEMS
+      </h1>
+      <Carousel
+        responsive={responsive}
+        autoPlaySpeed={5000}
+        keyBoardControl={true}
+        customTransition="all .5"
+        transitionDuration={500}
+        removeArrowOnDeviceType={["tablet", "mobile"]}
+        swipeable={false}
+        draggable={false}
+        showDots={false}
+        autoPlay={true}
+        infinite={true}
+        itemClass="carousel-item-padding-40-px"
+      >
         {allProducts.map((product: any) => (
           <Product key={product.id} product={product} />
         ))}
-      </div>
+      </Carousel>
       {/* {searchText ? (
         <PromptCardList
           data={searchedResults}

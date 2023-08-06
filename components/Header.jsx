@@ -4,9 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { ShoppingBagIcon } from "@heroicons/react/24/outline";
+import { BsSearch } from "react-icons/bs";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import { CartContext } from "@/context/cart.context";
 import React, { useContext } from "react";
+import { Input } from "antd";
 const Header = () => {
   const { data: session } = useSession();
   const { state, dispatch } = useContext(CartContext);
@@ -32,7 +34,27 @@ const Header = () => {
         />
         <p className="logo_text">Zebruck</p>
       </Link>
-
+      <div className="relative w-[400px] h-[54px]">
+        <Input className="rounded-full w-full" />
+        <div className="absolute right-0 top-0 h-[32px] w-[32px] flex justify-center items-center">
+          <BsSearch />
+        </div>
+        <div className="flex items-center justify-center mt-1">
+          <Link
+            href="/category/new-collection"
+            className="text-sm hover:text-red-300"
+          >
+            NEW COLLECTION
+          </Link>
+          &nbsp;&nbsp;&nbsp;
+          <Link
+            href="/category/best-seller"
+            className="text-sm hover:text-red-300"
+          >
+            BEST SELLER
+          </Link>
+        </div>
+      </div>
       {/* Desktop Navigation */}
       <div className="sm:flex hidden">
         <Link

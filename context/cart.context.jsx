@@ -3,15 +3,18 @@
 import React, { Dispatch, createContext, useReducer } from "react";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { notification } from "antd";
+import { notifySuccess } from "@/components/notification";
 const initialState = {
   cart: Cookies.get("cart")
     ? JSON.parse(Cookies.get("cart"))
     : { cartItems: [], shippingAddress: {}, paymentMethod: "" },
 };
+
 function reducer(state, action) {
-  const router = useRouter();
   switch (action.type) {
     case "CART_ADD_ITEM": {
+      notifySuccess("Added to cart!");
       const newItem = action.payload;
       const existItem = state?.cart?.cartItems?.find(
         (item) => item?._id === newItem?._id
@@ -65,7 +68,7 @@ function reducer(state, action) {
       return { ...state, cart: { ...state.cart, cartItems: [] } };
 
     case "SAVE_SHIPPING_ADDRESS":
-      router.push("/payment")
+      router.push("/payment");
       return {
         ...state,
         cart: {
