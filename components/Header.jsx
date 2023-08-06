@@ -32,9 +32,9 @@ const Header = () => {
           height={60}
           className="object-contain"
         />
-        <p className="text-xl">Zebruck</p>
+        <p className="md:text-xl">Zebruck</p>
       </Link>
-      <div className="relative w-[400px] h-[66px]">
+      <div className="hidden md:block relative w-[400px] h-[66px]">
         <Input className="rounded-full w-full mt-[16px]" />
         <div className="absolute right-0 top-[16px] h-[32px] w-[32px] flex justify-center items-center">
           <BsSearch />
@@ -142,7 +142,7 @@ const Header = () => {
                   onClick={() => {
                     signIn(provider.id);
                   }}
-                  className="black_btn text-xl"
+                  className="black_btn md:text-xl"
                 >
                   Sign in
                 </button>
@@ -212,7 +212,7 @@ const Header = () => {
                   onClick={() => {
                     signIn(provider.id);
                   }}
-                  className="black_btn"
+                  className="md:text-xl"
                 >
                   Sign in
                 </button>
