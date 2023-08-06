@@ -28,11 +28,11 @@ const Header = () => {
         <Image
           src="/assets/images/logo.jpeg"
           alt="logo"
-          width={60}
-          height={60}
-          className="object-contain"
+          width={40}
+          height={40}
+          className="object-contain md:scale-150 "
         />
-        <p className="md:text-xl">Zebruck</p>
+        <p className="md:text-xl md:ml-2">Zebruck</p>
       </Link>
       <div className="hidden md:block relative w-[400px] h-[66px]">
         <Input className="rounded-full w-full mt-[16px]" />
@@ -154,7 +154,7 @@ const Header = () => {
       {/* Mobile Navigation */}
       <div className="sm:hidden flex relative">
         <Link href="/cart" className="relative mr-6">
-          <ShoppingBagIcon className="h-8 w-8" />
+          <ShoppingBagIcon className="h-8 w-8 md:scale-150" />
           <div className="font-bold text-red-500 absolute top-[-8px] right-[-8px] w-6 h-6 flex justify-center items-center rounded-full text-sm bg-white border border-black">
             {state?.cart?.cartItems.reduce(
               (a, c) => Number(a) + Number(c.qty),
