@@ -95,7 +95,7 @@ const Feed = () => {
       </form> */}
       {/* All Prompts */}
       <h1
-        className="font-bold mt-4 text-center text-2xl md:text-5xl"
+        className="font-bold mt-8 text-center text-2xl md:text-5xl"
         onClick={() => createProduct()}
       >
         Zebruck
@@ -118,7 +118,7 @@ const Feed = () => {
         />
       </div>
       <h1
-        className="font-bold mt-4 text-center text-xl md:text-5xl"
+        className="font-bold mt-4 text-center text-xl md:text-4xl"
         onClick={() => createProduct()}
       >
         NEW COLLECTION
@@ -142,7 +142,7 @@ const Feed = () => {
         ))}
       </Carousel>
       <h1
-        className=" font-bold mt-4 text-center text-xl md:text-5xl"
+        className=" font-bold mt-4 text-center text-xl md:text-4xl"
         onClick={() => createProduct()}
       >
         BEST SELLER
@@ -166,7 +166,7 @@ const Feed = () => {
         ))}
       </Carousel>
       <h1
-        className=" font-bold mt-4 text-center text-xl md:text-5xl"
+        className=" font-bold mt-4 text-center text-xl md:text-4xl"
         onClick={() => createProduct()}
       >
         OTHER ITEMS

@@ -28,18 +28,18 @@ const Header = () => {
         <Image
           src="/assets/images/logo.jpeg"
           alt="logo"
-          width={40}
-          height={40}
+          width={60}
+          height={60}
           className="object-contain"
         />
-        <p className="logo_text">Zebruck</p>
+        <p className="text-xl">Zebruck</p>
       </Link>
-      <div className="relative w-[400px] h-[54px]">
-        <Input className="rounded-full w-full" />
-        <div className="absolute right-0 top-0 h-[32px] w-[32px] flex justify-center items-center">
+      <div className="relative w-[400px] h-[66px]">
+        <Input className="rounded-full w-full mt-[16px]" />
+        <div className="absolute right-0 top-[16px] h-[32px] w-[32px] flex justify-center items-center">
           <BsSearch />
         </div>
-        <div className="flex items-center justify-center mt-1">
+        <div className="flex items-center justify-center">
           <Link
             href="/category/new-collection"
             className="text-sm hover:text-red-300"
@@ -142,7 +142,7 @@ const Header = () => {
                   onClick={() => {
                     signIn(provider.id);
                   }}
-                  className="black_btn"
+                  className="black_btn text-xl"
                 >
                   Sign in
                 </button>
